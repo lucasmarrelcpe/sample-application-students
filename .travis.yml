@@ -3,9 +3,12 @@ script:
   - mvn clean verify
   - echo "$PASSWORD" | docker login -u "$LOGIN" --password-stdin
   - docker build -t sample-application-db-changelog-job sample-application-db-changelog-job/
+  - docker build -t ssample-application-http-api-server sample-application-http-api-server/
   - docker images
   - docker tag sample-application-db-changelog-job $LOGIN/sample-application-db-changelog-job
+  - docker tag sample-application-http-api-server $LOGIN/sample-application-http-api-server
   - docker push $LOGIN/sample-application-db-changelog-job
+  - docker push $LOGIN/sample-application-http-api-server
 cache:
   directories:
     - $HOME/.m2
