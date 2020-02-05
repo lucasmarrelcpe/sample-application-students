@@ -12,8 +12,20 @@ script:
   - docker tag sample-application-http-api-server $LOGIN/sample-application-http-api-server
   - docker images
   - docker push $LOGIN/sample-application-http-api-server
+  
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+
 cache:
   directories:
     - $HOME/.m2
+
 services:
   - docker
+
+addons:
+  sonarcloud:
+    organization: "lucasmarrelcpe"
+    token:
+      secure: "$SONAR_TOKEN" # encrypted value of your token
+  
