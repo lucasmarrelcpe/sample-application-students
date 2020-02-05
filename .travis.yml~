@@ -1,6 +1,6 @@
 language: java
 script: 
-  - mvn clean verify
+  - mvn clean verify:sonar -Pcoverage -Dsonar.projectKey=myorg_myrepo
 
   - echo "$PASSWORD" | docker login -u "$LOGIN" --password-stdin
   - docker build -t sample-application-db-changelog-job sample-application-db-changelog-job/
@@ -12,9 +12,6 @@ script:
   - docker tag sample-application-http-api-server $LOGIN/sample-application-http-api-server
   - docker images
   - docker push $LOGIN/sample-application-http-api-server
-  
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 
 cache:
   directories:
