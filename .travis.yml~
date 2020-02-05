@@ -1,6 +1,13 @@
 language: java
+
+addons:
+  sonarcloud:
+    organization: "lucasmarrelcpe"
+    token:
+      secure: "$SONAR_TOKEN" # encrypted value of your token
+
 script: 
-  - mvn clean verify:sonar -Pcoverage -Dsonar.projectKey=myorg_myrepo
+  - mvn clean verify:sonar -Pcoverage -Dsonar.projectKey=sample-application-students
 
   - echo "$PASSWORD" | docker login -u "$LOGIN" --password-stdin
   - docker build -t sample-application-db-changelog-job sample-application-db-changelog-job/
@@ -19,10 +26,4 @@ cache:
 
 services:
   - docker
-
-addons:
-  sonarcloud:
-    organization: "lucasmarrelcpe"
-    token:
-      secure: "$SONAR_TOKEN" # encrypted value of your token
   
